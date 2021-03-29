@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const path = require('path')
+const config = require('config')
 
 const app = express()
 
@@ -18,7 +19,7 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(process.env.MONGODB_URI || config.get('mongoUri'), {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
