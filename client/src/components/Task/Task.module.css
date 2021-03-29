@@ -1,0 +1,75 @@
+.taskPriority {
+  padding: 0.5rem;
+  border-bottom: 1px solid #c4c4c4;
+  text-align: center;
+}
+
+.taskPriority:last-of-type {
+  margin-bottom: 1rem;
+}
+
+.taskPriority-low {
+  background-color: rgba(0, 0, 255, .05);
+}
+
+.taskPriority-normal {
+  background-color: rgb(255, 255, 0, .05);
+}
+
+.taskPriority-high {
+  background-color: rgba(255, 0, 0, .05);
+}
+
+.taskName {
+  cursor: pointer;
+  position: relative;
+}
+
+.description {
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.descriptionString {
+  margin: 0;
+}
+
+.btnGroup {
+  display: flex;
+  flex-direction: row;
+  padding: 0 1rem;
+  margin: 0.5rem 0;
+}
+
+.btnBack {
+  margin-right: auto;
+}
+
+.btnForward {
+  margin-left: auto;
+}
+
+.taskTitle {
+  margin-right: 1.6rem;
+  outline: none;
+}
+
+.editIcon {
+  color: #555;
+  display: inline-block;
+  transform: rotateZ(90deg);
+  position: absolute;
+  top: -2px;
+  right: 3px;
+  font-size: 1.4rem;
+  font-style: normal;
+  outline-color: black;
+}
+
+.editIcon:hover,
+.editIcon:focus,
+.editIcon:active {
+  color: #000;
+  text-decoration: none;
+  transition: color .3s ease-out;
+}

@@ -1,0 +1,12 @@
+.wrapper {
+  background-color: #ececec;
+  padding: 1rem;
+  padding-bottom: 0;
+}
+
+.container {
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 1rem;
+  overflow-y: scroll;
+}

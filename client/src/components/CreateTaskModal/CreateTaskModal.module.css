@@ -1,0 +1,45 @@
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .8);
+  z-index: 10;
+}
+
+.container {
+  width: 400px;
+  background-color: #fff;
+  margin: auto;
+  margin-top: 100px;
+  z-index: 15;
+  padding: 1rem 1.5rem;
+  position: relative;
+}
+
+.closeModal {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 1px solid #c4c4c4;
+  width: 20px;
+  height: 20px;
+  top: -10px;
+  right: -10px;
+  line-height: 1rem;
+  padding: 0;
+  padding-bottom: .5rem;
+  font-size: 1.2rem;
+}
+
+.inputLabel {
+  width: 100%;
+}
+
+.submitBtn {
+  margin: 1rem 0;
+  text-align: center;
+}

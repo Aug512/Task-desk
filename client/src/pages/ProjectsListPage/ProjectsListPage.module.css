@@ -1,0 +1,56 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.projectsList {
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 1rem;
+  min-height: calc(82px + 2rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.project {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  padding: .25rem;
+}
+
+.projectTitle {
+  margin-bottom: 0;
+  outline: none;
+}
+
+.project:hover,
+.handlyFocused {
+  background-color: rgba(0, 0, 0, .03);
+}
+
+.project:last-of-type {
+  margin-bottom: 0;
+}
+
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formLabel {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.createForm {
+  width: 70%;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  background-color: #ececec;
+}
