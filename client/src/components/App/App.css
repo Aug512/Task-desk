@@ -8,8 +8,9 @@
   text-align: right;
   opacity: 0;
   transform: translateX(20vw);
-  /* transition: transform 1s ease-out, opacity .6s .4s ease-out; */
   transition: transform 1s ease-in-out, opacity .6s;
+  max-width: 90vw;
+  word-wrap: break-word;
 }
 
 .showAlert {

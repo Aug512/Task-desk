@@ -54,3 +54,36 @@
   padding: 1rem 2rem;
   background-color: #ececec;
 }
+
+@media (max-width: 600px) {
+
+  .projectListContainer {
+    margin: 0 10px;
+  }
+
+  .header {
+    margin-bottom: 1rem;
+  }
+
+  .header > h1 {
+    font-size: 2rem;
+  }
+
+  .project:nth-of-type(2n) {
+    background-color: rgba(0, 0, 0, .03);
+  }
+
+  .projectTitle {
+    font-size: 1.5rem;
+    word-wrap: break-word;
+    max-width: calc(100% - 80px);
+  }
+
+  .createForm{
+    width: 100%;
+  }
+
+  .createForm > h2 {
+    font-size: 1.6rem;
+  }
+}

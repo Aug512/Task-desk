@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { requestLogin, requestReg } from '../../store/actionCreators/setAuthorisation'
+import styles from './AuthPage.module.css'
 
 const mapStateToProps = state => {
   return {
@@ -28,7 +29,7 @@ const AuthPage = ({ loading, requestLogin, requestReg}) => {
   return (
     <>
       <h1 className="text-center">Auth Page</h1>
-      <form className="col-7 mr-auto ml-auto" onSubmit={e => e.preventDefault()}>
+      <form className={styles.formContainer} onSubmit={e => e.preventDefault()}>
         <div className="mb-3">
           <label htmlFor="login" className="form-label">Логин</label>
           <input
@@ -56,7 +57,7 @@ const AuthPage = ({ loading, requestLogin, requestReg}) => {
             onChange={ e => formChangeHandler(e) }
           />
         </div>
-        <div className="m-3 row justify-content-between">
+        <div className={styles.buttonGroup}>
           <button
             className="btn btn-primary"
             onClick={() => {requestReg(formData)}}

@@ -10,3 +10,9 @@
   padding-bottom: 1rem;
   overflow-y: scroll;
 }
+
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column;
+  }
+}

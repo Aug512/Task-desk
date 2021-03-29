@@ -2,7 +2,6 @@
   background-color: #fff;
   border-radius: 10px;
   min-width: 300px;
-  /* min-width: 257px --- mobile */
   min-height: 500px;
   padding: 1rem;
   margin-right: 1rem;
@@ -24,4 +23,13 @@
   margin: 0 auto;
   margin-top: auto;
   width: 100px;
+}
+
+@media (max-width: 600px) {
+  .column {
+    min-width: 257px;
+    width: 100%;
+    min-height: auto;
+    margin-bottom: 1rem;
+  }
 }

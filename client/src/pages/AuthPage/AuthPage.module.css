@@ -1,0 +1,26 @@
+.formContainer {
+  width: 500px;
+  max-width: 60%;
+  margin: 0 auto;
+}
+
+.buttonGroup {
+  margin: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+  .buttonGroup {
+    margin: 2rem 0;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .buttonGroup > button {
+    margin-bottom: 1rem;
+    width: min-content;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

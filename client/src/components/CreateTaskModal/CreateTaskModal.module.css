@@ -43,3 +43,21 @@
   margin: 1rem 0;
   text-align: center;
 }
+
+@media (max-width: 376px) {
+  .container {
+    margin-top: 0;
+    z-index: 15;
+    padding: 1rem 1.5rem;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+@media (max-width: 450px) {
+  .closeModal {
+    top: 10px;
+    right: 10px;
+  }
+}

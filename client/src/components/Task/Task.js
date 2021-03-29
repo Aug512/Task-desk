@@ -29,10 +29,9 @@ const Task = ({ project, setProject, task, columns, createTask }) => {
 
     if (direction === 'forward') {
       newColumn = columns[columnIndex + 1]
-    } else if (direction === 'back') {
+    }
+    if (direction === 'back') {
       newColumn = columns[columnIndex - 1]
-    } else {
-      throw new Error({message: 'Wrong function argument, doing nothing'})
     }
     
     const editedTask = {...task, column: newColumn}
@@ -42,24 +41,37 @@ const Task = ({ project, setProject, task, columns, createTask }) => {
     setProject({...project, data: {...project.data, tasks: editedTasks}})
   }
 
-  const removeTaskHandler = () => {
+  const removeTaskHandler = e => {
+    e.stopPropagation()
     const filteredTasks = project.data.tasks.filter(existedTask => existedTask !== task)
 
     setProject({...project, data: {...project.data, tasks: [...filteredTasks]}})
   }
 
-  const editTaskHandler = evt => {
-    evt.preventDefault()
-    evt.stopPropagation()
+  const editTaskHandler = e => {
+    e.stopPropagation()
     createTask(task)
   }
 
+  const editTaskByKeyboard = evt => {
+    if (evt.key === ' ' || evt.key === 'Enter') {
+      evt.target.click()
+    }
+  } 
+
+  const focusTaskEditByKeyboard = evt => {
+    evt.target.addEventListener('keypress', editTaskByKeyboard)
+  }
+
+  const blurTaskEditByKeyboard = evt => {
+    evt.target.removeEventListener('keypress', editTaskByKeyboard)
+  }
+
   return (
-    <div className={`${styles.taskPriority} ${styles[`taskPriority-${task.priority}`]}`}>
+    <div className={`${styles.taskPriority} ${styles[`taskPriority-${task.priority}`]}`} onClick={() => setDescriptionVisibility(prev => !prev)}>
       <div className={styles.taskName}>
         <h4 
           className={styles.taskTitle}
-          onClick={() => setDescriptionVisibility(prev => !prev)}
           onFocus={() => setDescriptionVisibility(true)}
           onBlur={() => setDescriptionVisibility(false)}
           title='Показать описание'
@@ -70,6 +82,8 @@ const Task = ({ project, setProject, task, columns, createTask }) => {
         <i
           className={styles.editIcon}
           onClick={editTaskHandler}
+          onFocus={focusTaskEditByKeyboard}
+          onBlur={blurTaskEditByKeyboard}
           title='Изменить задачу'
           tabIndex='0'  
         >
@@ -83,7 +97,7 @@ const Task = ({ project, setProject, task, columns, createTask }) => {
       <small>Создана: {new Date(task.createdAt).toLocaleString()}</small>
       <div className={styles.btnGroup}>
         {columnIndex !== 0 && <button
-            onClick={() => moveTask('back')}
+            onClick={e => {e.stopPropagation(); moveTask('back')}}
             className={styles.btnBack + ' btn btn-sm btn-outline-dark'}
             title='В предыдущую колонку'
           >
@@ -91,7 +105,7 @@ const Task = ({ project, setProject, task, columns, createTask }) => {
           </button>
         }
         {columnIndex !== columns.length - 1 && <button
-            onClick={() => moveTask('forward')}
+            onClick={e => {e.stopPropagation(); moveTask('forward')}}
             className={styles.btnForward + ' btn btn-sm btn-outline-dark'}
             title='В следующую колонку'
           >

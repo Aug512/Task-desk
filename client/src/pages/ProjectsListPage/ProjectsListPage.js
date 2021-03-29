@@ -81,7 +81,7 @@ const ProjectsListPage = ({ loading, token, projects, requestProjects, createPro
   }, [])
 
   return(
-    <>
+    <div className={styles.projectListContainer}>
       <header className={styles.header}>
         <h1>Список проектов</h1>
         <a href='/' className='btn btn-dark' onClick={logoutHandler}>Выйти</a>
@@ -138,7 +138,7 @@ const ProjectsListPage = ({ loading, token, projects, requestProjects, createPro
           Создать
         </button>
       </form>
-    </>
+    </div>
   )
 }
 

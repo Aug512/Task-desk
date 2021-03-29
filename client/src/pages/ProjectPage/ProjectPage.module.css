@@ -17,3 +17,13 @@
   margin: 0 auto;
   margin-top: 2rem;
 }
+
+@media (max-width: 600px) {
+  .header {
+    margin-bottom: 1rem;
+    word-break: break-all;
+  }
+  .btnGroup {
+    margin-bottom: 1rem;
+  }
+}

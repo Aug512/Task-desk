@@ -37,13 +37,16 @@ const App = ({ response, loginLocally }) => {
   }, [response])
 
   document.body.style.overflowX = 'hidden'
+  const reactAppContainer = document.getElementById('root')
+
+  reactAppContainer.style = 'position: relative; overflow-x: hidden'
 
   return (
     <Router>
       <div ref={alertRef} className={`alert alert-${response.status} alert-modal`} role="alert">
         {response.message}
       </div>
-      <div className='container mt-5'>
+      <div className='container pt-5'>
         <Routes />
       </div>
     </Router>

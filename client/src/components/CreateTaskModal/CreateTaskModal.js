@@ -55,8 +55,8 @@ const CreateTaskModal = ({project, setProject, createTask, columnName, existedTa
   }
 
   return (
-    <div className={styles.overlay}>
-      <form className={styles.container} onSubmit={e => taskCreatorHandler(e)}>
+    <div className={styles.overlay} onClick={() => {createTask({})}}>
+      <form className={styles.container} onSubmit={e => taskCreatorHandler(e)} onClick={e => e.stopPropagation()}>
         <button type='button' className={styles.closeModal} onClick={() => createTask({})}>&times;</button>
         <div className={styles.header}>
           <h3>{columnName}</h3>
