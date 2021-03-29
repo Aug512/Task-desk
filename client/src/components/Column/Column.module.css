@@ -14,6 +14,7 @@
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid #c4c4c4;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
@@ -31,5 +32,9 @@
     width: 100%;
     min-height: auto;
     margin-bottom: 1rem;
+  }
+
+  .header {
+    word-break: break-all;
   }
 }

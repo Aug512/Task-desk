@@ -6,7 +6,7 @@ import { USER_LOGOUT, LOGIN_LOCALLY } from './actions/authorisation'
 import { REQUEST_PROJECTS_START, REQUEST_PROJECTS_SUCCESS, REQUEST_PROJECTS_FAILURE } from './actions/projects'
 import { CREATE_PROJECT_START, CREATE_PROJECT_SUCCESS, CREATE_PROJECT_FAILURE } from './actions/projects'
 import { REQUEST_PROJECT_BY_ID_START, REQUEST_PROJECT_BY_ID_SUCCESS, REQUEST_PROJECT_BY_ID_FAILURE } from './actions/projects'
-import { SAVE_PROJECT_START, SAVE_PROJECT_SUCCESS, SAVE_PROJECT_FAILURE } from './actions/projects'
+import { SAVE_PROJECT_FAILURE } from './actions/projects'
 import { REMOVE_PROJECT_START, REMOVE_PROJECT_SUCCESS, REMOVE_PROJECT_FAILURE } from './actions/projects'
 import { SET_PROJECT, CREATE_TASK } from './actions/projects'
 
@@ -163,18 +163,6 @@ const reducer = (state = initialState, action) => {
           status: 'danger',
           message: action.payload
         }
-      }
-
-    case SAVE_PROJECT_START:
-      return {
-        ...state,
-        showLoader: true,
-      }
-
-    case SAVE_PROJECT_SUCCESS:
-      return {
-        ...state,
-        showLoader: false,
       }
 
     case SAVE_PROJECT_FAILURE:

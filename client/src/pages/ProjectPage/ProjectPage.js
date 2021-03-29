@@ -62,6 +62,11 @@ const ProjectPage = ({ project, token, loading, requestProjectById, saveProject,
     setMessage('Проект сохранён')
   }
 
+  const saveHandler = () => {
+    saveProject(token, linkId, project)
+    setMessage('Проект сохранён')
+  }
+
   const addColumn = () => {
     const newTitle = prompt('Введите название:')
     editColumns('add', newTitle)
@@ -75,10 +80,13 @@ const ProjectPage = ({ project, token, loading, requestProjectById, saveProject,
     <div>
       <header className={styles.header}>
         <h1>{project.title}</h1>
-        <button className='btn btn-danger' onClick={removeHandler}>Удалить проект</button>
+        <button className={`${styles.rmBtn} btn btn-danger`} onClick={removeHandler}>Удалить проект</button>
       </header>
       <div className={styles.btnGroup}>
-        <button className='btn btn-dark' onClick={goBackHandler}>Go back</button>
+        <div className={styles.btnWithSave}>
+          <button className={`${styles.backBtn} btn btn-dark`} onClick={goBackHandler}>Назад</button>
+          <button className={`btn btn-dark`} onClick={saveHandler}>Сохранить</button>
+        </div>
         <button className='btn btn-dark' onClick={addColumn}>Новый раздел</button>
       </div>
       {loading && <div className={styles.loaderWrapper}><Loader /></div>}

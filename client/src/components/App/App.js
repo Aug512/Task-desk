@@ -36,7 +36,6 @@ const App = ({ response, loginLocally }) => {
     setTimeout(() => {alertRef.current.classList.remove('showAlert')}, 2500)
   }, [response])
 
-  document.body.style.overflowX = 'hidden'
   const reactAppContainer = document.getElementById('root')
 
   reactAppContainer.style = 'position: relative; overflow-x: hidden'

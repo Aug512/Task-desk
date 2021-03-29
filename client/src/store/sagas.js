@@ -4,7 +4,7 @@ import { requestRegStart, requestRegError, requestRegSuccess } from './actionCre
 import { requestProjects, requestProjectsStart, requestProjectsError, requestProjectsSuccess } from './actionCreators/setProjects'
 import { createProjectStart, createProjectError, createProjectSuccess } from './actionCreators/setProjects'
 import { requestProjectByIdStart, requestProjectByIdError, requestProjectByIdSuccess } from './actionCreators/setProjects'
-import { saveProjectStart, saveProjectError, saveProjectSuccess } from './actionCreators/setProjects'
+import { saveProjectError } from './actionCreators/setProjects'
 import { removeProjectStart, removeProjectError, removeProjectSuccess } from './actionCreators/setProjects'
 
 import { REQUEST_LOGIN, REQUEST_REG } from './actions/authorisation'
@@ -25,7 +25,9 @@ function* requestLoginAsync(params) {
     const response = yield call(() => {
       return request('/api/auth/login', 'POST', {...params.data})
     })
-    yield login(response.token, response.userId)
+    if (params.data.saveData) {
+      yield login(response.token, response.userId)
+    }
     yield put(requestLoginSuccess(response))
   } catch (error) {
     yield put(requestLoginError(error.message))
@@ -137,13 +139,11 @@ export function* saveProjectWatcher() {
 
 function* saveProjectAsync(action) {
   try {
-    yield put(saveProjectStart(action.token))
     yield call(() => {
       return request(`/api/projects/${action.linkId}/update`, 'PUT', {...action.project}, {
         Authorization: `Bearer ${action.token}`
       })
     })
-    yield put(saveProjectSuccess())
   } catch (error) {
     yield put(saveProjectError(error.message))
   }

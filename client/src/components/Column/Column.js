@@ -46,8 +46,8 @@ const Column = ({ project, setProject, createTask, column, columns, tasks }) => 
   return (
     <div key={column} className={styles.column}>
       <div className={styles.header}>
-        <h3 className={styles.columnnTitle} ref={columnName}>{column}</h3>
-        <button className={styles.taskBtn + ' btn btn-light btn-sm'} onClick={createNewTask} title='Добавть задачу'>+</button>
+        <h3 ref={columnName}>{column}</h3>
+        <button className={'btn btn-light btn-sm ml-1'} onClick={createNewTask} title='Добавть задачу'>+</button>
       </div>
       <div>
         {tasks.filter(task => task.column === column).sort(comparePriority).map(task => <Task task={task} key={task.createdAt} columns={columns} projectLocal={project} setProjectLocal={setProject} />)}

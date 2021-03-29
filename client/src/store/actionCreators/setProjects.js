@@ -1,7 +1,7 @@
 import { REQUEST_PROJECTS, REQUEST_PROJECTS_START, REQUEST_PROJECTS_FAILURE, REQUEST_PROJECTS_SUCCESS} from '../actions/projects'
 import { CREATE_PROJECT, CREATE_PROJECT_START, CREATE_PROJECT_SUCCESS, CREATE_PROJECT_FAILURE } from '../actions/projects'
 import { REQUEST_PROJECT_BY_ID, REQUEST_PROJECT_BY_ID_START, REQUEST_PROJECT_BY_ID_FAILURE, REQUEST_PROJECT_BY_ID_SUCCESS} from '../actions/projects'
-import { SAVE_PROJECT, SAVE_PROJECT_START, SAVE_PROJECT_SUCCESS, SAVE_PROJECT_FAILURE } from '../actions/projects'
+import { SAVE_PROJECT, SAVE_PROJECT_FAILURE } from '../actions/projects'
 import { REMOVE_PROJECT, REMOVE_PROJECT_START, REMOVE_PROJECT_SUCCESS, REMOVE_PROJECT_FAILURE } from '../actions/projects'
 import { SET_PROJECT, CREATE_TASK } from '../actions/projects'
 
@@ -55,14 +55,6 @@ export const requestProjectByIdError = (error) => {
 
 export const saveProject = (token, linkId, project ) => {
   return { type: SAVE_PROJECT, token, linkId, project }
-}
-
-export const saveProjectStart = () => {
-  return { type: SAVE_PROJECT_START }
-}
-
-export const saveProjectSuccess = () => {
-  return { type: SAVE_PROJECT_SUCCESS }
 }
 
 export const saveProjectError = (error) => {

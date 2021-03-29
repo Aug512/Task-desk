@@ -11,6 +11,10 @@
   margin-bottom: 0.5rem;
 }
 
+.backBtn {
+  margin-right: 0.5em;
+}
+
 .loaderWrapper {
   width: 80px;
   height: 80px;
@@ -18,12 +22,34 @@
   margin-top: 2rem;
 }
 
+@media (max-width: 376px) {
+
+  .btnGroup {
+    align-items: stretch;
+  }
+  
+  .btnWithSave {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .backBtn {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+
 @media (max-width: 600px) {
   .header {
     margin-bottom: 1rem;
     word-break: break-all;
   }
+
   .btnGroup {
     margin-bottom: 1rem;
+  }
+
+  .rmBtn {
+    word-break: initial;
   }
 }

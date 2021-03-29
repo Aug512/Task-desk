@@ -17,12 +17,12 @@ const mapDispatchToProps = dispatch => {
 }
 
 const AuthPage = ({ loading, requestLogin, requestReg}) => {
-  const [formData, setFormData] = useState({ login: '', password: '' })
+  const [formData, setFormData] = useState({ login: '', password: '', saveData: true })
 
   const formChangeHandler = e => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.name === 'saveData' ? e.target.checked : e.target.value
     })
   }
 
@@ -41,6 +41,7 @@ const AuthPage = ({ loading, requestLogin, requestReg}) => {
             value={formData.login}
             aria-describedby="emailHelp"
             placeholder="Введите логин"
+            autoComplete='off'
             onChange={ e => formChangeHandler(e) }
           />
         </div>
@@ -54,14 +55,26 @@ const AuthPage = ({ loading, requestLogin, requestReg}) => {
             name="password"
             value={formData.password}
             placeholder="Введите пароль"
+            autoComplete='off'
             onChange={ e => formChangeHandler(e) }
           />
+        </div>
+        <div className="mb-3">
+          <input
+            type='checkbox'
+            id='saveData'
+            name='saveData'
+            defaultChecked='true'
+            onChange={ e => formChangeHandler(e) }
+          />
+          <label htmlFor="saveData" className="form-label ml-2">Запомнить меня</label>
         </div>
         <div className={styles.buttonGroup}>
           <button
             className="btn btn-primary"
             onClick={() => {requestReg(formData)}}
             disabled={loading}
+            type='button'
           >
             Зарегистрироваться
           </button>
