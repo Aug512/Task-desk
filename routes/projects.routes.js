@@ -32,7 +32,7 @@ router.post('/create', authMiddleware, async (req, res) => {
     res.status(201).json({ project, message: `Проект ${title} успешно создан!` })
 
   } catch (error) {
-    res.status(500).json({ message: 'Что-то пошло не так...', error })
+    res.status(500).json({ message: 'Что-то пошло не так...' })
   }
 })
 
@@ -67,7 +67,7 @@ router.delete('/:id/remove', authMiddleware, async (req, res) => {
 
     res.json({ message: 'Проект удалён' })
   } catch (error) {
-    res.status(500).json({ message: 'Что-то пошло не так...', error })
+    res.status(500).json({ message: 'Что-то пошло не так...' })
   }
 })
 

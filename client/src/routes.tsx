@@ -1,17 +1,13 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { useTypedSelector } from './middleware/useTypedSelector'
 import ProjectsListPage from './pages/ProjectsListPage/ProjectsListPage'
 import ProjectPage from './pages/ProjectPage/ProjectPage'
 import AuthPage from './pages/AuthPage/AuthPage'
 
-const mapStateToProps = state => {
-  return {
-    isLoggedIn: state.userData.isAuthorized
-  }
-}
+const Routes: React.FC = () => {
 
-const useRoutes = ({isLoggedIn}) => {
+  const isLoggedIn = useTypedSelector(state => state.userData.isAuthorized)
   
   if (isLoggedIn) {
     return (
@@ -37,4 +33,4 @@ const useRoutes = ({isLoggedIn}) => {
   )
 }
 
-export default connect(mapStateToProps, null)(useRoutes)
+export default Routes

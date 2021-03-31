@@ -1,28 +1,38 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
-import { requestLogin, requestReg } from '../../store/actionCreators/setAuthorisation'
-import styles from './AuthPage.module.css'
+//import { connect } from 'react-redux'
+import { useActions } from '../../middleware/useActions'
+import { useTypedSelector } from '../../middleware/useTypedSelector'
+//import { requestLogin, requestReg } from '../../store/actionCreators/setAuthorisation'
 
-const mapStateToProps = state => {
-  return {
-    loading: state.showLoader
-  }
-}
+const styles = require('./AuthPage.module.css')
 
-const mapDispatchToProps = dispatch => {
-  return {
-    requestLogin: (data) => dispatch(requestLogin(data)),
-    requestReg: (data) => dispatch(requestReg(data)),
-  }
-}
+// const mapStateToProps = state => {
+//   return {
+//     loading: state.showLoader
+//   }
+// }
 
-const AuthPage = ({ loading, requestLogin, requestReg}) => {
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     requestLogin: (data) => dispatch(requestLogin(data)),
+//     requestReg: (data) => dispatch(requestReg(data)),
+//   }
+// }
+
+const AuthPage: React.FC = () => {
+
+  // { loading, requestLogin, requestReg}
+
   const [formData, setFormData] = useState({ login: '', password: '', saveData: true })
 
-  const formChangeHandler = e => {
+  const loading = useTypedSelector(state => state.userData.showLoader)
+  const { requestLogin, requestReg } = useActions()
+
+  const formChangeHandler = (e: React.FormEvent<HTMLInputElement>): void => {
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.name === 'saveData' ? e.target.checked : e.target.value
+      [e.currentTarget.name]: e.currentTarget.name === 'saveData' ? e.currentTarget.checked : e.currentTarget.value
     })
   }
 
@@ -64,7 +74,7 @@ const AuthPage = ({ loading, requestLogin, requestReg}) => {
             type='checkbox'
             id='saveData'
             name='saveData'
-            defaultChecked='true'
+            defaultChecked={true}
             onChange={ e => formChangeHandler(e) }
           />
           <label htmlFor="saveData" className="form-label ml-2">Запомнить меня</label>
@@ -92,4 +102,5 @@ const AuthPage = ({ loading, requestLogin, requestReg}) => {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthPage)
+export default AuthPage
+// export default connect(mapStateToProps, mapDispatchToProps)(AuthPage)

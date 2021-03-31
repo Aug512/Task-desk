@@ -1,4 +1,4 @@
-import initialState from './initialState'
+import { initialState } from './initialState'
 import { REQUEST_LOGIN_START, REQUEST_LOGIN_SUCCESS, REQUEST_LOGIN_FAILURE } from './actions/authorisation'
 import { REQUEST_REG_START, REQUEST_REG_SUCCESS, REQUEST_REG_FAILURE } from './actions/authorisation'
 import { USER_LOGOUT, LOGIN_LOCALLY } from './actions/authorisation'
