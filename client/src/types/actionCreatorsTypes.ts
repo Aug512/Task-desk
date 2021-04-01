@@ -18,6 +18,7 @@ interface RequestLoginErrorAction {
   payload: string;
 }
 
+
 interface RequestRegAction {
   type: actionTypes.REQUEST_REG;
   data: ILoginData; 
@@ -35,6 +36,7 @@ interface RequestRegErrorAction {
   payload: string;
 }
 
+
 interface LogoutAction {
   type: actionTypes.USER_LOGOUT
 }
@@ -42,6 +44,7 @@ interface LoginLocallyAction {
   type: actionTypes.LOGIN_LOCALLY;
   payload: IWeakUserData;
 }
+
 
 interface RequestProjectsAction {
   type: actionTypes.REQUEST_PROJECTS;
@@ -52,15 +55,33 @@ interface RequestProjectsStartAction {
 }
 interface RequestProjectsSuccessAction {
   type: actionTypes.REQUEST_PROJECTS_SUCCESS;
-  payload: any[]; ///TODO
+  payload: IProject[]; ///TODO
 }
 interface RequestProjectsErrorAction {
   type: actionTypes.REQUEST_PROJECTS_FAILURE;
   payload: {
-    message: string;
-    errorCode?: number;
+    message: string,
+    errorCode: number,
   }
 }
+
+
+interface RequestProjectByIdAction {
+  type: actionTypes.REQUEST_PROJECT_BY_ID;
+  token: string;
+}
+interface RequestProjectByIdStartAction {
+  type: actionTypes.REQUEST_PROJECT_BY_ID_START;
+}
+interface RequestProjectByIdSuccessAction {
+  type: actionTypes.REQUEST_PROJECT_BY_ID_SUCCESS;
+  payload: IProject,
+}
+interface RequestProjectByIdErrorAction {
+  type: actionTypes.REQUEST_PROJECT_BY_ID_FAILURE;
+  payload: string,
+}
+
 
 interface CreateProjectAction {
   type: actionTypes.CREATE_PROJECT;
@@ -79,6 +100,7 @@ interface CreateProjectErrorAction {
   payload: string;
 }
 
+
 interface RemoveProjectAction {
   type: actionTypes.REMOVE_PROJECT;
   linkId: string;
@@ -96,6 +118,7 @@ interface RemoveProjectErrorAction {
   payload: string;
 }
 
+
 export type actionCreatorsType =
   RequestLoginAction
   | RequestLoginStartAction
@@ -111,6 +134,10 @@ export type actionCreatorsType =
   | RequestProjectsStartAction
   | RequestProjectsSuccessAction
   | RequestProjectsErrorAction
+  | RequestProjectByIdAction
+  | RequestProjectByIdStartAction
+  | RequestProjectByIdSuccessAction
+  | RequestProjectByIdErrorAction
   | CreateProjectAction
   | CreateProjectStartAction
   | CreateProjectSuccessAction

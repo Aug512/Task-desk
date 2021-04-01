@@ -1,43 +1,20 @@
 import React, { useEffect, useRef } from 'react'
-import { connect } from 'react-redux'
-// import { logout } from '../../store/actionCreators/setAuthorisation'
-// import { requestProjects, createProject, removeProject } from '../../store/actionCreators/setProjects'
-// import { setMessage } from '../../store/actionCreators/common'
 import { useHistory } from 'react-router-dom'
 import { logout as clearStorage } from '../../middleware/auth'
 import { useActions } from '../../middleware/useActions'
 import { useTypedSelector } from '../../middleware/useTypedSelector'
+import { IProject } from '../../types/stateTypes'
 import Loader from '../../components/Loader/Loader'
-import styles from './ProjectsListPage.module.css'
 
-// const mapStateToProps = state => {
-//   return {
-//     token: state.userData.token,
-//     loading: state.showLoader,
-//     projects: state.userData.projects,
-//     isAuthorised: state.userData.isAuthorised,
-//   }
-// }
+const styles = require('./ProjectsListPage.module.css')
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     requestProjects: token => dispatch(requestProjects(token)),
-//     createProject: (token, title) => dispatch(createProject(token, title)),
-//     removeProject: (token, linkId) => dispatch(removeProject(token, linkId)),
-//     setMessage: message => dispatch(setMessage(message)),
-//     logout: () => dispatch(logout()),
-//   }
-// }
-
-const ProjectsListPage = () => {
+const ProjectsListPage: React.FC = () => {
 
   const loading = useTypedSelector(state => state.showLoader)
-  const { token, projects, isAuthorised} = useTypedSelector(state => state.userData)
+  const { token, projects, isAuthorized} = useTypedSelector(state => state.userData)
   const { requestProjects, createProject, removeProject, setMessage, logout } = useActions()
 
-  // { loading, token, projects, requestProjects, createProject, removeProject, setMessage, logout, isAuthorised }
-
-  const projectTitle = useRef('')
+  const projectTitle = useRef<HTMLInputElement | null>(null)
   const history = useHistory()
 
   const logoutHandler = () => {
@@ -45,44 +22,47 @@ const ProjectsListPage = () => {
     logout()
   }
 
-  const createHandler = e => {
+  const createHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
-    createProject(token, projectTitle.current.value)
-    projectTitle.current.value = ''
+    createProject(token!, projectTitle.current!.value)
+    projectTitle.current!.value = ''
   }
 
-  const removeHandler = (linkId) => {
+  const removeHandler = (linkId: string): void => {
     const submit = window.confirm('Это действие необратимо. Вы уверены?')
 
     if (submit) {
-      removeProject(token, linkId)
+      removeProject(token!, linkId)
       setMessage('Проект удалён')
     }
   }
 
-  const openProjectByKeyboard = evt => {
+  const openProjectByKeyboard = (evt: KeyboardEvent): void => {
     if (evt.key === ' ' || evt.key === 'Enter') {
-      evt.target.click()
+      const target: HTMLElement = evt.currentTarget as HTMLElement
+      target.click()
     }
   } 
 
-  const focusProjectByKeyboard = evt => {
-    evt.target.parentElement.classList.add(styles.handlyFocused)
-    evt.target.addEventListener('keypress', openProjectByKeyboard)
+  const focusProjectByKeyboard = (evt: React.FocusEvent): void => {
+    const target: HTMLElement = evt.currentTarget as HTMLElement;
+    (target.parentNode as HTMLElement).classList.add(styles.handlyFocused)
+    target.addEventListener('keypress', openProjectByKeyboard)
   }
 
-  const blurProjectByKeyboard = evt => {
-    evt.target.parentElement.classList.remove(styles.handlyFocused)
-    evt.target.removeEventListener('keypress', openProjectByKeyboard)
+  const blurProjectByKeyboard = (evt: React.FocusEvent): void => {
+    const target: HTMLElement = evt.currentTarget as HTMLElement;
+    (target.parentNode as HTMLElement).classList.remove(styles.handlyFocused)
+    target.removeEventListener('keypress', openProjectByKeyboard)
   }
 
   useEffect( () => {
-    if (isAuthorised === false) history.push('/')
-  }, [isAuthorised, history])
+    if (isAuthorized === false) history.push('/')
+  }, [isAuthorized, history])
 
   useEffect( () => {
     async function fetchData() {
-      await requestProjects(token)
+      await requestProjects(token!)
     }
     fetchData();
     // eslint-disable-next-line
@@ -95,19 +75,19 @@ const ProjectsListPage = () => {
         <a href='/' className='btn btn-dark' onClick={logoutHandler}>Выйти</a>
       </header>
       
-      <button onClick={() => requestProjects(token)} className='btn btn-dark mb-2'>Обновить список</button>
+      <button onClick={() => requestProjects(token!)} className='btn btn-dark mb-2'>Обновить список</button>
 
       <div className={styles.projectsList}>
         {loading && <div className={styles.loaderWrapper}><Loader /></div>}
         {!loading && projects.length === 0 && <p className='mb-0'>Проектов нет</p>}
-        {!loading && projects.map(proj => <div
+        {!loading && projects.map((proj: IProject) => <div
             className={styles.project}
             key={proj._id}
             onClick={() => history.push(`/projects/${proj._id}`)}
           >
             <h3
               className={styles.projectTitle}
-              tabIndex='0'
+              tabIndex={0}
               onFocus={focusProjectByKeyboard}
               onBlur={blurProjectByKeyboard}
             >
@@ -116,8 +96,8 @@ const ProjectsListPage = () => {
             <button
               className='btn btn-sm btn-outline-danger ml-auto'
               onClick={ e => {e.stopPropagation(); removeHandler(proj._id)}}
-              onFocus={e => e.target.parentElement.classList.add(styles.handlyFocused)}
-              onBlur={e => e.target.parentElement.classList.remove(styles.handlyFocused)}
+              onFocus={e => e.target.parentElement!.classList.add(styles.handlyFocused)}
+              onBlur={e => e.target.parentElement!.classList.remove(styles.handlyFocused)}
             >
               Удалить
             </button>
@@ -151,4 +131,3 @@ const ProjectsListPage = () => {
 }
 
 export default ProjectsListPage
-// export default connect(mapStateToProps, mapDispatchToProps)(ProjectsListPage)

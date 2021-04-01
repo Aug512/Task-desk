@@ -100,23 +100,23 @@ function* createProjectAsync(action: any): any {
 }
 
 
-// export function* requestProjectByIdWatcher() {
-//   yield takeEvery(REQUEST_PROJECT_BY_ID, requestProjectByIdAsync)
-// }
+export function* requestProjectByIdWatcher() {
+  yield takeEvery(actionTypes.REQUEST_PROJECT_BY_ID, requestProjectByIdAsync)
+}
 
-// function* requestProjectByIdAsync(action) {
-//   try {
-//     yield put(requestProjectByIdStart(action.token))
-//     const response = yield call(() => {
-//       return request(`/api/projects/${action.linkId}`, 'GET', null, {
-//         Authorization: `Bearer ${action.token}`
-//       })
-//     })
-//     yield put(requestProjectByIdSuccess(response))
-//   } catch (error) {
-//     yield put(requestProjectByIdError(error.message))
-//   }
-// }
+function* requestProjectByIdAsync(action: any): any {   // TODO
+  try {
+    yield put(createAction.requestProjectByIdStart())
+    const response = yield call(() => {
+      return request(`/api/projects/${action.linkId}`, 'GET', null, {
+        Authorization: `Bearer ${action.token}`
+      })
+    })
+    yield put(createAction.requestProjectByIdSuccess(response))
+  } catch (error) {
+    yield put(createAction.requestProjectByIdError(error.message))
+  }
+}
 
 // export function* saveProjectWatcher() {
 //   yield takeEvery(SAVE_PROJECT, saveProjectAsync)

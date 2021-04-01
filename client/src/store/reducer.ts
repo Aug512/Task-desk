@@ -13,7 +13,7 @@ import { initialState } from './initialState'
 // import { userDataAction, userDataActionTypes } from '../types/userDataTypes'
 import { actionTypes } from '../types/actionTypes'
 import { actionCreatorsType } from '../types/actionCreatorsTypes'
-import { IUserData } from '../types/stateTypes'
+// import { IUserData } from '../types/stateTypes'
 import { IState } from '../types/stateTypes'
 
 const reducer = (state: IState = initialState, action: actionCreatorsType ) => {
@@ -93,12 +93,12 @@ const reducer = (state: IState = initialState, action: actionCreatorsType ) => {
         showLoader: false,
         userData: {
           ...state.userData,
-          projects: [...action.payload],
+          projects: action.payload,
         }
       }
 
     case actionTypes.REQUEST_PROJECTS_FAILURE:
-      if (action.payload.errorCode === 401) {
+      if (typeof action.payload === 'object' && action.payload.errorCode === 401) {
         return {
           ...state,
           userData: {
@@ -147,28 +147,28 @@ const reducer = (state: IState = initialState, action: actionCreatorsType ) => {
         }
       }
 
-    // case REQUEST_PROJECT_BY_ID_START:
-    //   return {
-    //     ...state,
-    //     showLoader: true,
-    //   }
+    case actionTypes.REQUEST_PROJECT_BY_ID_START:
+      return {
+        ...state,
+        showLoader: true,
+      }
 
-    // case REQUEST_PROJECT_BY_ID_SUCCESS:
-    //   return {
-    //     ...state,
-    //     showLoader: false,
-    //     project: {...action.payload}
-    //   }
+    case actionTypes.REQUEST_PROJECT_BY_ID_SUCCESS:
+      return {
+        ...state,
+        showLoader: false,
+        project: {...action.payload}
+      }
 
-    // case REQUEST_PROJECT_BY_ID_FAILURE:
-    //   return {
-    //     ...state,
-    //     showLoader: false,
-    //     serverResponse: {
-    //       status: 'danger',
-    //       message: action.payload
-    //     }
-    //   }
+    case actionTypes.REQUEST_PROJECT_BY_ID_FAILURE:
+      return {
+        ...state,
+        showLoader: false,
+        serverResponse: {
+          status: 'danger',
+          message: action.payload
+        }
+      }
 
     // case SAVE_PROJECT_FAILURE:
     //   return {
