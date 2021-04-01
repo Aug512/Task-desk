@@ -7,14 +7,14 @@ export interface IUserData {
   token: string | null,
   userId: string | null,
   isAuthorized: boolean,
-  projects: any[], //TODO
+  projects: IProject[],
 }
 
 export interface IState {
   showLoader: boolean,
   userData: IUserData,
-  project: {}, //TODO
-  newTask: {}, //TODO
+  project: IProject | null,
+  newTask: ITask | null,
   serverResponse: null | IServerResponse,
 }
 
@@ -30,7 +30,7 @@ export interface IWeakUserData {
 }
 export interface IProjectData {
   columns: string[],
-  tasks: any[], // TODO
+  tasks: ITask[],
 }
 export interface INewProjectResponse {
   project: IProject,
@@ -46,6 +46,7 @@ export interface IProject {
 export interface ITask {
   name: string,
   description: string[],
+  column: string,
   priority: string, // TODO -> edit this to enum
   createdAt: Date,
 }

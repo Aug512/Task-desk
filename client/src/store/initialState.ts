@@ -8,7 +8,7 @@ export const initialState: IState = {
     isAuthorized: false,
     projects: [],
   },
-  project: {},
-  newTask: {},
+  project: null,
+  newTask: null,
   serverResponse: null,
 }

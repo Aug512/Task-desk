@@ -5,6 +5,7 @@
 // import { REMOVE_PROJECT, REMOVE_PROJECT_START, REMOVE_PROJECT_SUCCESS, REMOVE_PROJECT_FAILURE } from '../actions/projects'
 // import { SET_PROJECT, CREATE_TASK } from '../actions/projects'
 
+import { actionCreatorsType } from '../../types/actionCreatorsTypes'
 import { actionTypes } from '../../types/actionTypes'
 import { IProject, ITask } from '../../types/stateTypes'
 
@@ -15,7 +16,7 @@ export const requestProjects = (token: string) => {
 export const requestProjectsStart = () => {
   return { type: actionTypes.REQUEST_PROJECTS_START }
 }
-export const requestProjectsSuccess = (payload: any[]) => { // TODO
+export const requestProjectsSuccess = (payload: IProject[]) => {
   return { type: actionTypes.REQUEST_PROJECTS_SUCCESS, payload }
 }
 export const requestProjectsError = (error: string, errorCode?: number) => {
@@ -40,8 +41,8 @@ export const createProjectError = (error: string) => {
 export const requestProjectById = (token: string, linkId: string) => {
   return { type: actionTypes.REQUEST_PROJECT_BY_ID, token, linkId }
 }
-export const requestProjectByIdStart = () => {
-  return { type: actionTypes.REQUEST_PROJECT_BY_ID_START }
+export const requestProjectByIdStart = (token: string, linkId: string) => {
+  return { type: actionTypes.REQUEST_PROJECT_BY_ID_START, token, linkId }
 }
 export const requestProjectByIdSuccess = (payload: IProject) => {
   return { type: actionTypes.REQUEST_PROJECT_BY_ID_SUCCESS, payload }
@@ -53,6 +54,9 @@ export const requestProjectByIdError = (error: string) => {
 
 export const saveProject = (token: string, linkId: string, project: IProject ) => {
   return { type: actionTypes.SAVE_PROJECT, token, linkId, project }
+}
+export const saveProjectSuccess = (message: string) => {
+  return { type: actionTypes.SAVE_PROJECT_SUCCESS, payload: message }
 }
 export const saveProjectError = (error: string) => {
   return { type: actionTypes.SAVE_PROJECT_FAILURE, payload: error}
@@ -74,9 +78,9 @@ export const removeProjectError = (error: string) => {
 
 
 export const setProject = (project: IProject) => {
-  return { type: actionTypes.SET_PROJECT, project}
+  return { type: actionTypes.SET_PROJECT, payload: project}
 }
 
 export const createTask = (task: ITask) => {
-  return { type: actionTypes.CREATE_TASK, task}
+  return { type: actionTypes.SET_TASK, payload: task}
 } 

@@ -1,18 +1,6 @@
-// import { requestLoginStart, requestLoginError, requestLoginSuccess } from './actionCreators/setAuthorisation'
-// import { requestRegStart, requestRegError, requestRegSuccess } from './actionCreators/setAuthorisation'
-
-// import { requestProjects, requestProjectsStart, requestProjectsError, requestProjectsSuccess } from './actionCreators/setProjects'
-// import { createProjectStart, createProjectError, createProjectSuccess } from './actionCreators/setProjects'
-// import { requestProjectByIdStart, requestProjectByIdError, requestProjectByIdSuccess } from './actionCreators/setProjects'
-// import { saveProjectError } from './actionCreators/setProjects'
-// import { removeProjectStart, removeProjectError, removeProjectSuccess } from './actionCreators/setProjects'
-
-import { actionTypes } from '../types/actionTypes'
-
-
-import createAction from './actionCreators/index'
-
 import { takeEvery, put, call } from 'redux-saga/effects'
+import { actionTypes } from '../types/actionTypes'
+import createAction from './actionCreators/index'
 import httpMiddleware from '../middleware/http'
 import { login, logout as clearStorage } from '../middleware/auth'
 
@@ -83,7 +71,7 @@ export function* createProjectWatcher() {
   yield takeEvery(actionTypes.CREATE_PROJECT, createProjectAsync)
 }
 
-function* createProjectAsync(action: any): any {
+function* createProjectAsync(action: any): any {    // TODO
   try {
     yield put(createAction.createProjectStart())
     const response = yield call(() => {
@@ -106,7 +94,7 @@ export function* requestProjectByIdWatcher() {
 
 function* requestProjectByIdAsync(action: any): any {   // TODO
   try {
-    yield put(createAction.requestProjectByIdStart())
+    yield put(createAction.requestProjectByIdStart(action.token, action.linkId))
     const response = yield call(() => {
       return request(`/api/projects/${action.linkId}`, 'GET', null, {
         Authorization: `Bearer ${action.token}`
@@ -118,21 +106,22 @@ function* requestProjectByIdAsync(action: any): any {   // TODO
   }
 }
 
-// export function* saveProjectWatcher() {
-//   yield takeEvery(SAVE_PROJECT, saveProjectAsync)
-// }
+export function* saveProjectWatcher() {
+  yield takeEvery(actionTypes.SAVE_PROJECT, saveProjectAsync)
+}
 
-// function* saveProjectAsync(action) {
-//   try {
-//     yield call(() => {
-//       return request(`/api/projects/${action.linkId}/update`, 'PUT', {...action.project}, {
-//         Authorization: `Bearer ${action.token}`
-//       })
-//     })
-//   } catch (error) {
-//     yield put(saveProjectError(error.message))
-//   }
-// }
+function* saveProjectAsync(action: any): any {    //TODO
+  try {
+    yield call(() => {
+      return request(`/api/projects/${action.linkId}/update`, 'PUT', {...action.project}, {
+        Authorization: `Bearer ${action.token}`
+      })
+    })
+    yield put(createAction.saveProjectSuccess('Проект сохранён'))
+  } catch (error) {
+    yield put(createAction.saveProjectError(error.message))
+  }
+}
 
 export function* removeProjectWatcher() {
   yield takeEvery(actionTypes.REMOVE_PROJECT, removeProjectAsync)

@@ -12,7 +12,7 @@ const ProjectsListPage: React.FC = () => {
 
   const loading = useTypedSelector(state => state.showLoader)
   const { token, projects, isAuthorized} = useTypedSelector(state => state.userData)
-  const { requestProjects, createProject, removeProject, setMessage, logout } = useActions()
+  const { requestProjects, createProject, removeProject, logout } = useActions()
 
   const projectTitle = useRef<HTMLInputElement | null>(null)
   const history = useHistory()
@@ -33,7 +33,6 @@ const ProjectsListPage: React.FC = () => {
 
     if (submit) {
       removeProject(token!, linkId)
-      setMessage('Проект удалён')
     }
   }
 

@@ -41,7 +41,7 @@ router.get('/', authMiddleware, async (req, res) => {
     const projects = await Project.find({ owner: req.user.userId })
     res.json(projects)
   } catch (error) {
-    res.status(500).json({ message: 'Что-то пошло не так...', error })
+    res.status(500).json({ message: 'Что-то пошло не так...' })
   }
 })
 
@@ -50,7 +50,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
     const project = await Project.findById(req.params.id)
     res.json(project)
   } catch (error) {
-    res.status(500).json({ message: 'Что-то пошло не так...', error })
+    res.status(500).json({ message: 'Что-то пошло не так...' })
   }
 })
 
@@ -84,7 +84,7 @@ router.put('/:id/update', authMiddleware, async (req, res) => {
 
     res.json({ message: 'Проект успешно обновлён' })
   } catch (error) {
-    res.status(500).json({ message: 'Что-то пошло не так...', error })
+    res.status(500).json({ message: 'Что-то пошло не так...' })
   }
 })
 

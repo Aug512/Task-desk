@@ -170,15 +170,25 @@ const reducer = (state: IState = initialState, action: actionCreatorsType ) => {
         }
       }
 
-    // case SAVE_PROJECT_FAILURE:
-    //   return {
-    //     ...state,
-    //     showLoader: false,
-    //     serverResponse: {
-    //       status: 'danger',
-    //       message: action.payload
-    //     }
-    //   }
+    case actionTypes.SAVE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        showLoader: false,
+        serverResponse: {
+          status: 'dark',
+          message: action.payload
+        }
+      }
+
+    case actionTypes.SAVE_PROJECT_FAILURE:
+      return {
+        ...state,
+        showLoader: false,
+        serverResponse: {
+          status: 'danger',
+          message: action.payload
+        }
+      }
 
     case actionTypes.REMOVE_PROJECT_SUCCESS: {
       return {
@@ -200,17 +210,17 @@ const reducer = (state: IState = initialState, action: actionCreatorsType ) => {
         }
       }
 
-    // case SET_PROJECT:
-    //   return {
-    //     ...state,
-    //     project: {...action.project}
-    //   }
+    case actionTypes.SET_PROJECT:
+      return {
+        ...state,
+        project: {...action.payload}
+      }
 
-    // case CREATE_TASK:
-    //   return {
-    //     ...state,
-    //     newTask: {...action.task}
-    //   }
+    case actionTypes.SET_TASK:
+      return {
+        ...state,
+        newTask: {...action.payload}
+      }
 
     case actionTypes.USER_LOGOUT:
       return {
@@ -221,8 +231,8 @@ const reducer = (state: IState = initialState, action: actionCreatorsType ) => {
           isAuthorized: false,
           projects: [],
         },
-        project: {},
-        newTask: {},
+        project: null,
+        newTask: null,
         serverResponse: {}
       }
 
