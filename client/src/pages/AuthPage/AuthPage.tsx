@@ -1,31 +1,14 @@
 import React, { useState } from 'react'
-//import { connect } from 'react-redux'
 import { useActions } from '../../middleware/useActions'
 import { useTypedSelector } from '../../middleware/useTypedSelector'
-//import { requestLogin, requestReg } from '../../store/actionCreators/setAuthorisation'
 
 const styles = require('./AuthPage.module.css')
 
-// const mapStateToProps = state => {
-//   return {
-//     loading: state.showLoader
-//   }
-// }
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     requestLogin: (data) => dispatch(requestLogin(data)),
-//     requestReg: (data) => dispatch(requestReg(data)),
-//   }
-// }
-
 const AuthPage: React.FC = () => {
-
-  // { loading, requestLogin, requestReg}
 
   const [formData, setFormData] = useState({ login: '', password: '', saveData: true })
 
-  const loading = useTypedSelector(state => state.userData.showLoader)
+  const loading = useTypedSelector(state => state.showLoader)
   const { requestLogin, requestReg } = useActions()
 
   const formChangeHandler = (e: React.FormEvent<HTMLInputElement>): void => {

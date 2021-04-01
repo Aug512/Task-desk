@@ -1,4 +1,5 @@
 {
   "port": "5000",
-  "jwtSecret": "app-desk-kek"
+  "jwtSecret": "app-desk-kek",
+  "mongoUri": "mongodb+srv://Aug512:Aug512dbOdmen@cluster0.xszfg.mongodb.net/kanban-desk-db?retryWrites=true&w=majority"
 }

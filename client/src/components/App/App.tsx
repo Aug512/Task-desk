@@ -9,7 +9,7 @@ import './App.css'
 
 const App: React.FC = () => {
 
-  const { serverResponse } = useTypedSelector(state => state.userData)
+  const { serverResponse } = useTypedSelector(state => state)
   const { loginLocally } = useActions()
 
   const alertRef: HTMLElement | null = document.getElementById('alertModalRef')
@@ -23,7 +23,7 @@ const App: React.FC = () => {
   }, [])
 
   useEffect( () => {
-    if (serverResponse) {
+    if (serverResponse?.message) {
       alertRef?.classList.add('showAlert')
       setTimeout(() => {alertRef?.classList.remove('showAlert')}, 2500)
     }

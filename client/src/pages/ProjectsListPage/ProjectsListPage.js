@@ -1,33 +1,41 @@
 import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
-import { logout } from '../../store/actionCreators/setAuthorisation'
-import { requestProjects, createProject, removeProject } from '../../store/actionCreators/setProjects'
-import { setMessage } from '../../store/actionCreators/common'
+// import { logout } from '../../store/actionCreators/setAuthorisation'
+// import { requestProjects, createProject, removeProject } from '../../store/actionCreators/setProjects'
+// import { setMessage } from '../../store/actionCreators/common'
 import { useHistory } from 'react-router-dom'
 import { logout as clearStorage } from '../../middleware/auth'
+import { useActions } from '../../middleware/useActions'
+import { useTypedSelector } from '../../middleware/useTypedSelector'
 import Loader from '../../components/Loader/Loader'
 import styles from './ProjectsListPage.module.css'
 
-const mapStateToProps = state => {
-  return {
-    token: state.userData.token,
-    loading: state.showLoader,
-    projects: state.userData.projects,
-    isAuthorised: state.userData.isAuthorised,
-  }
-}
+// const mapStateToProps = state => {
+//   return {
+//     token: state.userData.token,
+//     loading: state.showLoader,
+//     projects: state.userData.projects,
+//     isAuthorised: state.userData.isAuthorised,
+//   }
+// }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    requestProjects: token => dispatch(requestProjects(token)),
-    createProject: (token, title) => dispatch(createProject(token, title)),
-    removeProject: (token, linkId) => dispatch(removeProject(token, linkId)),
-    setMessage: message => dispatch(setMessage(message)),
-    logout: () => dispatch(logout()),
-  }
-}
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     requestProjects: token => dispatch(requestProjects(token)),
+//     createProject: (token, title) => dispatch(createProject(token, title)),
+//     removeProject: (token, linkId) => dispatch(removeProject(token, linkId)),
+//     setMessage: message => dispatch(setMessage(message)),
+//     logout: () => dispatch(logout()),
+//   }
+// }
 
-const ProjectsListPage = ({ loading, token, projects, requestProjects, createProject, removeProject, setMessage, logout, isAuthorised }) => {
+const ProjectsListPage = () => {
+
+  const loading = useTypedSelector(state => state.showLoader)
+  const { token, projects, isAuthorised} = useTypedSelector(state => state.userData)
+  const { requestProjects, createProject, removeProject, setMessage, logout } = useActions()
+
+  // { loading, token, projects, requestProjects, createProject, removeProject, setMessage, logout, isAuthorised }
 
   const projectTitle = useRef('')
   const history = useHistory()
@@ -142,4 +150,5 @@ const ProjectsListPage = ({ loading, token, projects, requestProjects, createPro
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectsListPage)
+export default ProjectsListPage
+// export default connect(mapStateToProps, mapDispatchToProps)(ProjectsListPage)

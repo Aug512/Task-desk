@@ -1,4 +1,4 @@
-import { IWeakUserData } from '../types/userDataTypes'
+import { IWeakUserData } from '../types/stateTypes'
 
 const storageName = 'userData'
 

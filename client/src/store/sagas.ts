@@ -1,17 +1,16 @@
-import { requestLoginStart, requestLoginError, requestLoginSuccess } from './actionCreators/setAuthorisation'
-import { requestRegStart, requestRegError, requestRegSuccess } from './actionCreators/setAuthorisation'
+// import { requestLoginStart, requestLoginError, requestLoginSuccess } from './actionCreators/setAuthorisation'
+// import { requestRegStart, requestRegError, requestRegSuccess } from './actionCreators/setAuthorisation'
 
-import { requestProjects, requestProjectsStart, requestProjectsError, requestProjectsSuccess } from './actionCreators/setProjects'
-import { createProjectStart, createProjectError, createProjectSuccess } from './actionCreators/setProjects'
-import { requestProjectByIdStart, requestProjectByIdError, requestProjectByIdSuccess } from './actionCreators/setProjects'
-import { saveProjectError } from './actionCreators/setProjects'
-import { removeProjectStart, removeProjectError, removeProjectSuccess } from './actionCreators/setProjects'
+// import { requestProjects, requestProjectsStart, requestProjectsError, requestProjectsSuccess } from './actionCreators/setProjects'
+// import { createProjectStart, createProjectError, createProjectSuccess } from './actionCreators/setProjects'
+// import { requestProjectByIdStart, requestProjectByIdError, requestProjectByIdSuccess } from './actionCreators/setProjects'
+// import { saveProjectError } from './actionCreators/setProjects'
+// import { removeProjectStart, removeProjectError, removeProjectSuccess } from './actionCreators/setProjects'
 
-import { REQUEST_LOGIN, REQUEST_REG } from './actions/authorisation'
-import { REQUEST_PROJECTS, CREATE_PROJECT, REQUEST_PROJECT_BY_ID, SAVE_PROJECT, REMOVE_PROJECT } from './actions/projects'
+import { actionTypes } from '../types/actionTypes'
 
-import { ILoginData, userDataActionTypes } from '../types/userDataTypes'
-import * as createAction from './actionCreators/setAuthorisation'
+
+import createAction from './actionCreators/index'
 
 import { takeEvery, put, call } from 'redux-saga/effects'
 import httpMiddleware from '../middleware/http'
@@ -20,7 +19,7 @@ import { login, logout as clearStorage } from '../middleware/auth'
 const { request } = httpMiddleware()
 
 export function* loginRequestWatcher() {
-  yield takeEvery(userDataActionTypes.REQUEST_LOGIN, requestLoginAsync)
+  yield takeEvery(actionTypes.REQUEST_LOGIN, requestLoginAsync)
 }
 
 function* requestLoginAsync(params: any): any {  //TODO
@@ -39,64 +38,66 @@ function* requestLoginAsync(params: any): any {  //TODO
 }
 
 export function* regRequestWatcher() {
-  yield takeEvery(userDataActionTypes.REQUEST_REG, requestRegAsync)
+  yield takeEvery(actionTypes.REQUEST_REG, requestRegAsync)
 }
 
 function* requestRegAsync(params: any): any {   //TODO
   try {
-    yield put(createAction.requestRegStart())
+    yield put(createAction.requestRegStart({...params}))
     const response = yield call(() => {
       return request('/api/auth/register', 'POST', {...params.data})
     })
-    yield put(createAction.requestRegSuccess(response))
+    yield put(createAction.requestRegSuccess(response.message))
   } catch (error) {
     yield put(createAction.requestRegError(error.message))
   }
 }
 
 
-// export function* requestProjectsWatcher() {
-//   yield takeEvery(userDataActionTypes.REQUEST_PROJECTS, requestProjectsAsync)
-// }
+export function* requestProjectsWatcher() {
+  yield takeEvery(actionTypes.REQUEST_PROJECTS, requestProjectsAsync)
+}
 
-// function* requestProjectsAsync(action) {
-//   try {
-//     yield put(requestProjectsStart())
-//     const response = yield call(() => {
-//       return request('/api/projects/', 'GET', null, {
-//         Authorization: `Bearer ${action.token}`
-//       })
-//     })
-//     yield put(requestProjectsSuccess(response))
-//   } catch (error) {
-//     if (error.message === 'No authorisation') {
-//       yield clearStorage()
-//       yield put(requestProjectsError({errorCode: 401, message: 'Токен устарел'}))
-//     } else {
-//       yield put(requestProjectsError(error.message))
-//     }
-//   }
-// }
+function* requestProjectsAsync(action: any): any {  // TODO
+  try {
+    yield put(createAction.requestProjectsStart())
+    const response = yield call(() => {
+      return request('/api/projects/', 'GET', null, {
+        Authorization: `Bearer ${action.token}`
+      })
+    })
+    yield put(createAction.requestProjectsSuccess(response))
+  } catch (error) {
+    if (error.message === 'No authorisation') {
+      yield clearStorage()
+      const message = 'Токен устарел'
+      const errorCode = 401
+      yield put(createAction.requestProjectsError( message, errorCode))
+    } else {
+      yield put(createAction.requestProjectsError(error.message))
+    }
+  }
+}
 
-// export function* createProjectWatcher() {
-//   yield takeEvery(userDataActionTypes.CREATE_PROJECT, createProjectAsync)
-// }
+export function* createProjectWatcher() {
+  yield takeEvery(actionTypes.CREATE_PROJECT, createProjectAsync)
+}
 
-// function* createProjectAsync(action) {
-//   try {
-//     yield put(createProjectStart())
-//     const response = yield call(() => {
-//       return request('/api/projects/create', 'POST', {...action}, {
-//         Authorization: `Bearer ${action.token}`
-//       })
-//     })
-//     yield put(createProjectSuccess(response))
-//     yield put(requestProjects(action.token))
-//   } catch (error) {
-//     yield put(createProjectError(error.message))
-//     yield put(requestProjects(action.token))
-//   }
-// }
+function* createProjectAsync(action: any): any {
+  try {
+    yield put(createAction.createProjectStart())
+    const response = yield call(() => {
+      return request('/api/projects/create', 'POST', {...action}, {
+        Authorization: `Bearer ${action.token}`
+      })
+    })
+    yield put(createAction.createProjectSuccess(response.message))
+    yield put(createAction.requestProjects(action.token))
+  } catch (error) {
+    yield put(createAction.createProjectError(error.message))
+    yield put(createAction.requestProjects(action.token))
+  }
+}
 
 
 // export function* requestProjectByIdWatcher() {
@@ -133,21 +134,20 @@ function* requestRegAsync(params: any): any {   //TODO
 //   }
 // }
 
-// export function* removeProjectWatcher() {
-//   yield takeEvery(userDataActionTypes.REMOVE_PROJECT, removeProjectAsync)
-// }
+export function* removeProjectWatcher() {
+  yield takeEvery(actionTypes.REMOVE_PROJECT, removeProjectAsync)
+}
 
-// function* removeProjectAsync(action) {
-//   try {
-//     yield put(removeProjectStart())
-//     yield call(() => {
-//       return request(`/api/projects/${action.linkId}/remove`, 'DELETE', null, {
-//         Authorization: `Bearer ${action.token}`
-//       })
-//     })
-//     yield put(removeProjectSuccess())
-//     yield put(requestProjects(action.token))
-//   } catch (error) {
-//     yield put(removeProjectError(error.message))
-//   }
-// }
+function* removeProjectAsync(action: any): any {    // TODO
+  try {
+    yield call(() => {
+      return request(`/api/projects/${action.linkId}/remove`, 'DELETE', null, {
+        Authorization: `Bearer ${action.token}`
+      })
+    })
+    yield put(createAction.removeProjectSuccess('Проект удалён'))
+    yield put(createAction.requestProjects(action.token))
+  } catch (error) {
+    yield put(createAction.removeProjectError(error.message))
+  }
+}
