@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+// @ts-ignore
 import { BrowserRouter as Router } from 'react-router-dom'
 import Routes from '../../routes'
 import { useActions } from '../../middleware/useActions'

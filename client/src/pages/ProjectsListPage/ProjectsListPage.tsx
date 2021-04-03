@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+// @ts-ignore
 import { useHistory } from 'react-router-dom'
 import { logout as clearStorage } from '../../middleware/auth'
 import { useActions } from '../../middleware/useActions'

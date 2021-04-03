@@ -1,4 +1,5 @@
 import React from 'react'
+// @ts-ignore
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { useTypedSelector } from './middleware/useTypedSelector'
 import ProjectsListPage from './pages/ProjectsListPage/ProjectsListPage'

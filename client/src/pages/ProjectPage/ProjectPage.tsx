@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+// @ts-ignore
 import { useParams, useHistory } from 'react-router-dom'
 import Columns from '../../components/Columns/Columns'
 import Loader from '../../components/Loader/Loader'
