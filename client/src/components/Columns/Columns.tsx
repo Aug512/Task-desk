@@ -1,8 +1,11 @@
 import React from 'react'
+import { useTypedSelector } from '../../middleware/useTypedSelector'
 import Column from '../Column/Column'
 import styles from './Columns.module.css'
 
-const Columns = ({ data }) => {
+const Columns: React.FC = () => {
+
+  const data = useTypedSelector(state => state.project?.data)
 
   return (
     <div className={styles.wrapper}>

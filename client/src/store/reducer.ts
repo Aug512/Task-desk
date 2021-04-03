@@ -1,19 +1,6 @@
-// import { REQUEST_LOGIN_START, REQUEST_LOGIN_SUCCESS, REQUEST_LOGIN_FAILURE } from './actions/authorisation'
-// import { REQUEST_REG_START, REQUEST_REG_SUCCESS, REQUEST_REG_FAILURE } from './actions/authorisation'
-// import { USER_LOGOUT, LOGIN_LOCALLY } from './actions/authorisation'
-
-// import { REQUEST_PROJECTS_START, REQUEST_PROJECTS_SUCCESS, REQUEST_PROJECTS_FAILURE } from './actions/projects'
-// import { CREATE_PROJECT_START, CREATE_PROJECT_SUCCESS, CREATE_PROJECT_FAILURE } from './actions/projects'
-// import { REQUEST_PROJECT_BY_ID_START, REQUEST_PROJECT_BY_ID_SUCCESS, REQUEST_PROJECT_BY_ID_FAILURE } from './actions/projects'
-// import { SAVE_PROJECT_FAILURE } from './actions/projects'
-// import { REMOVE_PROJECT_START, REMOVE_PROJECT_SUCCESS, REMOVE_PROJECT_FAILURE } from './actions/projects'
-// import { SET_PROJECT, CREATE_TASK } from './actions/projects'
-
 import { initialState } from './initialState'
-// import { userDataAction, userDataActionTypes } from '../types/userDataTypes'
 import { actionTypes } from '../types/actionTypes'
 import { actionCreatorsType } from '../types/actionCreatorsTypes'
-// import { IUserData } from '../types/stateTypes'
 import { IState } from '../types/stateTypes'
 
 const reducer = (state: IState = initialState, action: actionCreatorsType ) => {
@@ -250,25 +237,7 @@ const reducer = (state: IState = initialState, action: actionCreatorsType ) => {
           status: 'dark',
           message: 'Добро пожаловать!',
         }
-      }  
-  
-    // case 'SHOW_MESSAGE':
-    //   return {
-    //     ...state,
-    //     serverResponse: {
-    //       status: 'dark',
-    //       message: action.message,
-    //     }
-    //   }
-
-    // case 'SHOW_ERROR':
-    //   return {
-    //     ...state,
-    //     serverResponse: {
-    //       status: 'danger',
-    //       message: action.message,
-    //     }
-    //   }
+      }
 
     default:
       return state

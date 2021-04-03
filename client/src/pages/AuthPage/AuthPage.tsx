@@ -12,6 +12,7 @@ const AuthPage: React.FC = () => {
   const { requestLogin, requestReg } = useActions()
 
   const formChangeHandler = (e: React.FormEvent<HTMLInputElement>): void => {
+    e.preventDefault()
 
     setFormData({
       ...formData,
@@ -65,7 +66,7 @@ const AuthPage: React.FC = () => {
         <div className={styles.buttonGroup}>
           <button
             className="btn btn-primary"
-            onClick={() => {requestReg(formData)}}
+            onClick={() => {if (formData.login.length >= 5 && formData.password.length >= 8) {requestReg(formData)}}}
             disabled={loading}
             type='button'
           >
@@ -74,7 +75,7 @@ const AuthPage: React.FC = () => {
           <button
             type='submit'
             className="btn btn-light"
-            onClick={() => {requestLogin(formData)}}
+            onClick={() => {if (formData.login.length >= 5 && formData.password.length >= 8) {requestLogin(formData)}}}
             disabled={loading}
           >
             Войти

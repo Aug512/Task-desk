@@ -54,7 +54,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
   }
 })
 
-router.delete('/:id/remove', authMiddleware, async (req, res) => {
+router.delete('/:id', authMiddleware, async (req, res) => {
   try {
     await Project.findByIdAndDelete({ _id: req.params.id })
     let user = await User.findOne({ _id: req.user.userId })
@@ -71,7 +71,7 @@ router.delete('/:id/remove', authMiddleware, async (req, res) => {
   }
 })
 
-router.put('/:id/update', authMiddleware, async (req, res) => {
+router.put('/:id', authMiddleware, async (req, res) => {
   try {
 
     const project = await Project.findOneAndUpdate({ _id: req.params.id }, {

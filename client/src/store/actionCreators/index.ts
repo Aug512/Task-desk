@@ -1,9 +1,9 @@
 import * as authActionCreators from './setAuthorisation'
 import * as projectsActionCreators from './setProjects'
-import * as commonActionCreators from './common'
 
-export default {
+const createAction = {
   ...authActionCreators,
   ...projectsActionCreators,
-  ...commonActionCreators,
 }
+
+export default createAction

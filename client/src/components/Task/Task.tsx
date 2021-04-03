@@ -1,70 +1,68 @@
 import React, {useState} from 'react'
-import { connect } from 'react-redux'
-import { setProject, createTask } from '../../store/actionCreators/setProjects'
+import { useActions } from '../../middleware/useActions'
+import { useTypedSelector } from '../../middleware/useTypedSelector'
+import { ITask } from '../../types/stateTypes'
 import styles from './Task.module.css'
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    project: state.project,
-    columns: state.project.data.columns,
-    task: ownProps.task,
-  }
+interface TaskOwnProps {
+  task: ITask
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setProject: proj => dispatch(setProject(proj)),
-    createTask: task => dispatch(createTask(task)),
-  }
-}
+type TaskDirection = 'forward' | 'back'
 
-const Task = ({ project, setProject, task, columns, createTask }) => {
+const Task: React.FC<TaskOwnProps> = ({ task }) => {
+
+  const project = useTypedSelector(state => state.project)
+  const columns = useTypedSelector(state => state.project?.data.columns)
+
+  const { setProject, createTask } = useActions()
 
   const [isDescriptionOpen, setDescriptionVisibility] = useState(false)
 
-  const columnIndex = columns.findIndex(column => column === task.column)
+  const columnIndex = columns!.findIndex(column => column === task.column)
 
-  const moveTask = (direction) => {
+  const moveTask = (direction: TaskDirection): void => {
     let newColumn = task.column
 
     if (direction === 'forward') {
-      newColumn = columns[columnIndex + 1]
+      newColumn = columns![columnIndex + 1]
     }
     if (direction === 'back') {
-      newColumn = columns[columnIndex - 1]
+      newColumn = columns![columnIndex - 1]
     }
     
     const editedTask = {...task, column: newColumn}
-    const filteredTasks = project.data.tasks.filter(existedTask => existedTask !== task)
+    const filteredTasks = project!.data.tasks.filter(existedTask => existedTask !== task)
     const editedTasks = [...filteredTasks, editedTask]
 
-    setProject({...project, data: {...project.data, tasks: editedTasks}})
+    setProject({...project!, data: {...project!.data, tasks: editedTasks}})
   }
 
-  const removeTaskHandler = e => {
-    e.stopPropagation()
-    const filteredTasks = project.data.tasks.filter(existedTask => existedTask !== task)
+  const removeTaskHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.stopPropagation()
+    const filteredTasks = project!.data.tasks.filter(existedTask => existedTask !== task)
 
-    setProject({...project, data: {...project.data, tasks: [...filteredTasks]}})
+    setProject({...project!, data: {...project!.data, tasks: [...filteredTasks]}})
   }
 
-  const editTaskHandler = e => {
-    e.stopPropagation()
+  const editTaskHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.stopPropagation()
     createTask(task)
   }
 
-  const editTaskByKeyboard = evt => {
+  const editTaskByKeyboard = (evt: KeyboardEvent) => {
     if (evt.key === ' ' || evt.key === 'Enter') {
-      evt.target.click()
+      const target: HTMLElement = evt.currentTarget as HTMLElement;
+      target.click()
     }
   } 
 
-  const focusTaskEditByKeyboard = evt => {
-    evt.target.addEventListener('keypress', editTaskByKeyboard)
+  const focusTaskEditByKeyboard = (evt: React.FocusEvent<HTMLSpanElement>) => {
+    evt.currentTarget.addEventListener('keypress', editTaskByKeyboard)
   }
 
-  const blurTaskEditByKeyboard = evt => {
-    evt.target.removeEventListener('keypress', editTaskByKeyboard)
+  const blurTaskEditByKeyboard = (evt: React.FocusEvent<HTMLSpanElement>) => {
+    evt.currentTarget.removeEventListener('keypress', editTaskByKeyboard)
   }
 
   return (
@@ -75,20 +73,20 @@ const Task = ({ project, setProject, task, columns, createTask }) => {
           onFocus={() => setDescriptionVisibility(true)}
           onBlur={() => setDescriptionVisibility(false)}
           title='Показать описание'
-          tabIndex='0'
+          tabIndex={0}
         >
           {task.name}
         </h4>
-        <i
+        <span
           className={styles.editIcon}
           onClick={editTaskHandler}
           onFocus={focusTaskEditByKeyboard}
           onBlur={blurTaskEditByKeyboard}
           title='Изменить задачу'
-          tabIndex='0'  
+          tabIndex={0}
         >
           &#9998;
-        </i>
+        </span>
       </div>
       {isDescriptionOpen && <div className={styles.description}>
           {task.description.map((string, index) => <p key={index} className={styles.descriptionString}>{string}</p>)}
@@ -104,7 +102,7 @@ const Task = ({ project, setProject, task, columns, createTask }) => {
             &#8678;
           </button>
         }
-        {columnIndex !== columns.length - 1 && <button
+        {columnIndex !== columns!.length - 1 && <button
             onClick={e => {e.stopPropagation(); moveTask('forward')}}
             className={styles.btnForward + ' btn btn-sm btn-outline-dark'}
             title='В следующую колонку'
@@ -121,4 +119,4 @@ const Task = ({ project, setProject, task, columns, createTask }) => {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Task)
+export default Task

@@ -20,6 +20,7 @@ const App: React.FC = () => {
     if (localData) {
       loginLocally({token: localData.token, userId: localData.userId})
     }
+    // eslint-disable-next-line
   }, [])
 
   useEffect( () => {
@@ -27,6 +28,7 @@ const App: React.FC = () => {
       alertRef?.classList.add('showAlert')
       setTimeout(() => {alertRef?.classList.remove('showAlert')}, 2500)
     }
+    // eslint-disable-next-line
   }, [serverResponse])
 
   return (

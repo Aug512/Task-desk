@@ -1,39 +1,40 @@
 import React, { useRef } from 'react'
 import Task from '../Task/Task'
-import { connect } from 'react-redux'
-import { setProject, createTask } from '../../store/actionCreators/setProjects'
 import styles from './Column.module.css'
+import { ITask } from '../../types/stateTypes'
+import { useTypedSelector } from '../../middleware/useTypedSelector'
+import { useActions } from '../../middleware/useActions'
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    project: state.project,
-    column: ownProps.column,
-    columns: state.project.data.columns,
-    tasks: state.project.data.tasks,
-  }
+interface ColumnOwnProps {
+  column: string
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setProject: proj => dispatch(setProject(proj)),
-    createTask: task => dispatch(createTask(task)),
-  }
-}
+const Column: React.FC<ColumnOwnProps> = ({ column }) => {
 
-const Column = ({ project, setProject, createTask, column, columns, tasks }) => {
+  const project = useTypedSelector(state => state.project!)
+  const { columns, tasks } = useTypedSelector(state => state.project!.data)
 
-  const columnName = useRef(null)
+  const { setProject, createTask } = useActions()
 
-  const comparePriority = (a, b) => {
+  const columnName = useRef<HTMLHeadingElement>(null)
+
+  const comparePriority = (a: ITask, b: ITask): number => {
     if (a.priority === 'high' && (b.priority === 'normal' || b.priority === 'low')) return -1;
     if (a.priority === 'normal' && b.priority === 'low') return -1;
     if (a.priority === b.priority) return 0;
     if (a.priority === 'normal' && b.priority === 'high') return 1;
     if (a.priority === 'low' && (b.priority === 'high' || b.priority === 'normal')) return 1;
+    else return 0
   }
 
   const createNewTask = () => {
-    createTask({column: columnName.current.innerText})
+    createTask({
+      column: columnName.current!.innerText,
+      name: '',
+      description: [],
+      priority: 'normal',
+      createdAt: new Date(),
+    })
   }
 
   const removeColumnHandler = () => {
@@ -50,7 +51,7 @@ const Column = ({ project, setProject, createTask, column, columns, tasks }) => 
         <button className={'btn btn-light btn-sm ml-1'} onClick={createNewTask} title='Добавть задачу'>+</button>
       </div>
       <div>
-        {tasks.filter(task => task.column === column).sort(comparePriority).map(task => <Task task={task} key={task.createdAt} columns={columns} projectLocal={project} setProjectLocal={setProject} />)}
+        {tasks.filter((task: ITask) => task.column === column).sort(comparePriority).map((task: ITask) => <Task task={task} key={+task.createdAt} />)}
       </div>
       <button className={styles.deleteColumnButton + ' btn btn-outline-danger'} onClick={() => removeColumnHandler()}>
         Удалить
@@ -59,4 +60,4 @@ const Column = ({ project, setProject, createTask, column, columns, tasks }) => 
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Column)
+export default Column

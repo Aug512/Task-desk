@@ -69,7 +69,8 @@ const ProjectPage: React.FC = () => {
 
   useEffect( () => {
     requestProjectById(token!, linkId)
-  }, [requestProjectById, token, linkId])
+    // eslint-disable-next-line
+  }, [])
 
   return(
     <div>
@@ -86,7 +87,7 @@ const ProjectPage: React.FC = () => {
       </div>
       {loading && <div className={styles.loaderWrapper}><Loader /></div>}
       {!loading && <>
-        <Columns data={project?.data} />
+        <Columns />
         </>}
       {newTask?.column && <CreateTaskModal />}
     </div>

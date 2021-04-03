@@ -1,7 +1,7 @@
 import { actionTypes } from './actionTypes'
 import { ILoginData, IWeakUserData, IProject, ITask } from './stateTypes'
 
-interface RequestLoginAction {
+export interface RequestLoginAction {
   type: actionTypes.REQUEST_LOGIN,
   data: ILoginData,
 }
@@ -19,7 +19,7 @@ interface RequestLoginErrorAction {
 }
 
 
-interface RequestRegAction {
+export interface RequestRegAction {
   type: actionTypes.REQUEST_REG,
   data: ILoginData,
 }
@@ -46,7 +46,7 @@ interface LoginLocallyAction {
 }
 
 
-interface RequestProjectsAction {
+export interface RequestProjectsAction {
   type: actionTypes.REQUEST_PROJECTS,
   token: string,
 }
@@ -67,15 +67,13 @@ interface RequestProjectsErrorAction {
 }
 
 
-interface RequestProjectByIdAction {
+export interface RequestProjectByIdAction {
   type: actionTypes.REQUEST_PROJECT_BY_ID,
   token: string,
   linkId: string,
 }
 interface RequestProjectByIdStartAction {
   type: actionTypes.REQUEST_PROJECT_BY_ID_START,
-  token: string,
-  linkId: string,
 }
 interface RequestProjectByIdSuccessAction {
   type: actionTypes.REQUEST_PROJECT_BY_ID_SUCCESS,
@@ -87,7 +85,7 @@ interface RequestProjectByIdErrorAction {
 }
 
 
-interface CreateProjectAction {
+export interface CreateProjectAction {
   type: actionTypes.CREATE_PROJECT,
   token: string,
   title: string,
@@ -104,8 +102,11 @@ interface CreateProjectErrorAction {
   payload: string,
 }
 
-interface SaveProjectAction {
+export interface SaveProjectAction {
   type: actionTypes.SAVE_PROJECT,
+  token: string,
+  linkId: string,
+  project: IProject,
 }
 interface saveProjectSuccessAction {
   type: actionTypes.SAVE_PROJECT_SUCCESS,
@@ -117,10 +118,10 @@ interface saveProjectErrorAction {
 }
 
 
-interface RemoveProjectAction {
+export interface RemoveProjectAction {
   type: actionTypes.REMOVE_PROJECT,
   linkId: string,
-  title: string,
+  token: string,
 }
 interface RemoveProjectStartAction {
   type: actionTypes.REMOVE_PROJECT_START,

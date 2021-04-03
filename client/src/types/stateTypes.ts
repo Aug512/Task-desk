@@ -47,6 +47,6 @@ export interface ITask {
   name: string,
   description: string[],
   column: string,
-  priority: string, // TODO -> edit this to enum
+  priority: string,
   createdAt: Date,
 }

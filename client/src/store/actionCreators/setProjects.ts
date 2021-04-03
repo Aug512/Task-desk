@@ -1,11 +1,3 @@
-// import { REQUEST_PROJECTS, REQUEST_PROJECTS_START, REQUEST_PROJECTS_FAILURE, REQUEST_PROJECTS_SUCCESS} from '../actions/projects'
-// import { CREATE_PROJECT, CREATE_PROJECT_START, CREATE_PROJECT_SUCCESS, CREATE_PROJECT_FAILURE } from '../actions/projects'
-// import { REQUEST_PROJECT_BY_ID, REQUEST_PROJECT_BY_ID_START, REQUEST_PROJECT_BY_ID_FAILURE, REQUEST_PROJECT_BY_ID_SUCCESS} from '../actions/projects'
-// import { SAVE_PROJECT, SAVE_PROJECT_FAILURE } from '../actions/projects'
-// import { REMOVE_PROJECT, REMOVE_PROJECT_START, REMOVE_PROJECT_SUCCESS, REMOVE_PROJECT_FAILURE } from '../actions/projects'
-// import { SET_PROJECT, CREATE_TASK } from '../actions/projects'
-
-import { actionCreatorsType } from '../../types/actionCreatorsTypes'
 import { actionTypes } from '../../types/actionTypes'
 import { IProject, ITask } from '../../types/stateTypes'
 
@@ -41,8 +33,8 @@ export const createProjectError = (error: string) => {
 export const requestProjectById = (token: string, linkId: string) => {
   return { type: actionTypes.REQUEST_PROJECT_BY_ID, token, linkId }
 }
-export const requestProjectByIdStart = (token: string, linkId: string) => {
-  return { type: actionTypes.REQUEST_PROJECT_BY_ID_START, token, linkId }
+export const requestProjectByIdStart = () => {
+  return { type: actionTypes.REQUEST_PROJECT_BY_ID_START }
 }
 export const requestProjectByIdSuccess = (payload: IProject) => {
   return { type: actionTypes.REQUEST_PROJECT_BY_ID_SUCCESS, payload }
@@ -81,6 +73,6 @@ export const setProject = (project: IProject) => {
   return { type: actionTypes.SET_PROJECT, payload: project}
 }
 
-export const createTask = (task: ITask) => {
+export const createTask = (task: ITask | null) => {
   return { type: actionTypes.SET_TASK, payload: task}
 } 

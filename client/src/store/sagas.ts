@@ -1,5 +1,6 @@
 import { takeEvery, put, call } from 'redux-saga/effects'
 import { actionTypes } from '../types/actionTypes'
+import { RequestLoginAction, RequestRegAction, RequestProjectsAction, CreateProjectAction, RequestProjectByIdAction, SaveProjectAction, RemoveProjectAction } from '../types/actionCreatorsTypes'
 import createAction from './actionCreators/index'
 import httpMiddleware from '../middleware/http'
 import { login, logout as clearStorage } from '../middleware/auth'
@@ -10,7 +11,7 @@ export function* loginRequestWatcher() {
   yield takeEvery(actionTypes.REQUEST_LOGIN, requestLoginAsync)
 }
 
-function* requestLoginAsync(params: any): any {  //TODO
+function* requestLoginAsync(params: RequestLoginAction): any {
   try {
     yield put(createAction.requestLoginStart({...params.data}))
     const response = yield call(() => {
@@ -29,9 +30,9 @@ export function* regRequestWatcher() {
   yield takeEvery(actionTypes.REQUEST_REG, requestRegAsync)
 }
 
-function* requestRegAsync(params: any): any {   //TODO
+function* requestRegAsync(params: RequestRegAction): any {
   try {
-    yield put(createAction.requestRegStart({...params}))
+    yield put(createAction.requestRegStart({...params.data}))
     const response = yield call(() => {
       return request('/api/auth/register', 'POST', {...params.data})
     })
@@ -46,7 +47,7 @@ export function* requestProjectsWatcher() {
   yield takeEvery(actionTypes.REQUEST_PROJECTS, requestProjectsAsync)
 }
 
-function* requestProjectsAsync(action: any): any {  // TODO
+function* requestProjectsAsync(action: RequestProjectsAction): any {
   try {
     yield put(createAction.requestProjectsStart())
     const response = yield call(() => {
@@ -71,7 +72,7 @@ export function* createProjectWatcher() {
   yield takeEvery(actionTypes.CREATE_PROJECT, createProjectAsync)
 }
 
-function* createProjectAsync(action: any): any {    // TODO
+function* createProjectAsync(action: CreateProjectAction): any {
   try {
     yield put(createAction.createProjectStart())
     const response = yield call(() => {
@@ -92,9 +93,9 @@ export function* requestProjectByIdWatcher() {
   yield takeEvery(actionTypes.REQUEST_PROJECT_BY_ID, requestProjectByIdAsync)
 }
 
-function* requestProjectByIdAsync(action: any): any {   // TODO
+function* requestProjectByIdAsync(action: RequestProjectByIdAction): any {
   try {
-    yield put(createAction.requestProjectByIdStart(action.token, action.linkId))
+    yield put(createAction.requestProjectByIdStart())
     const response = yield call(() => {
       return request(`/api/projects/${action.linkId}`, 'GET', null, {
         Authorization: `Bearer ${action.token}`
@@ -110,10 +111,10 @@ export function* saveProjectWatcher() {
   yield takeEvery(actionTypes.SAVE_PROJECT, saveProjectAsync)
 }
 
-function* saveProjectAsync(action: any): any {    //TODO
+function* saveProjectAsync(action: SaveProjectAction): any {
   try {
     yield call(() => {
-      return request(`/api/projects/${action.linkId}/update`, 'PUT', {...action.project}, {
+      return request(`/api/projects/${action.linkId}`, 'PUT', {...action.project}, {
         Authorization: `Bearer ${action.token}`
       })
     })
@@ -127,15 +128,14 @@ export function* removeProjectWatcher() {
   yield takeEvery(actionTypes.REMOVE_PROJECT, removeProjectAsync)
 }
 
-function* removeProjectAsync(action: any): any {    // TODO
+function* removeProjectAsync(action: RemoveProjectAction): any {
   try {
     yield call(() => {
-      return request(`/api/projects/${action.linkId}/remove`, 'DELETE', null, {
+      return request(`/api/projects/${action.linkId}`, 'DELETE', null, {
         Authorization: `Bearer ${action.token}`
       })
     })
     yield put(createAction.removeProjectSuccess('Проект удалён'))
-    yield put(createAction.requestProjects(action.token))
   } catch (error) {
     yield put(createAction.removeProjectError(error.message))
   }
